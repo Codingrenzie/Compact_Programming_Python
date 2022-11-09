@@ -1,13 +1,13 @@
-def solution(str):
-    vowels = ("a","e","i","o","u","A","E","I","O","U")
+def solution(string):
+    vowels = ("a", "e", "i", "o", "u", "A", "E", "I", "O", "U")
     count = 0
-    for alphabet in str:
+    for alphabet in string:
         if vowels.count(alphabet) > 0:
             count = count + 1
 
     print("Number of vowels = ", count)
 
 
-str = input("Enter the string : ")
+entry = input("Enter the string : ")
 
-solution(str)
+solution(entry)
