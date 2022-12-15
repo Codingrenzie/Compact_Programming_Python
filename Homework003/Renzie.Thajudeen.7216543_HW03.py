@@ -17,7 +17,7 @@ class Direction(Enum):  # different directions a piece can move
     northwest = 8
 
 
-class Title(Enum):
+class Title(Enum): #name of the pieces
     king = 1
     queen = 2
     bishop = 3
@@ -26,7 +26,7 @@ class Title(Enum):
     pawn = 6
 
 
-class Position:
+class Position: # A postion with respective to a board who's starting point is (0,0) and ends in (8,8)
     def __init__(self, i: int, j: int):
         self.coordinates = None
         self.x = i
@@ -64,7 +64,7 @@ class Knight(ChessFigure):
     def __init__(self, color, position):
         super().__init__(color, Title.knight, position)
 
-    def move(self, directionA: Direction, directionB: Direction):
+    def move(self, directionA: Direction, directionB: Direction): #for the knight to move one has to decide the main direction out if north,west,south and east and also if its taking the right ot left side respective to the initial direction.
         if directionA == Direction.north and directionB == Direction.northeast:
             self.position.x += 1
             self.position.y += 2
@@ -102,7 +102,7 @@ class Knight(ChessFigure):
 
     def beat(self, victim: ChessFigure):
 
-        if self.hasMoved and self.position == victim.position:
+        if self.hasMoved and self.position == victim.position: #for a piece to beat it should be in the range of movement and if beat the position of the victim piece is transferred to the moved piece.
             print(self.title.name, " has beat ", victim.title.name)
 
 
@@ -112,7 +112,7 @@ class Bishop(ChessFigure):
         self.moves = None
 
     def move(self, i, direction: Direction):  # here "i" denotes the jumps taken, "i" can be negative steps too
-        for direction.value in [2, 4, 6, 8]:
+        for direction.value in [2, 4, 6, 8]: # These values correspond to the enum values defined
             self.position.y += i
             self.position.x += i
         else:
@@ -128,7 +128,7 @@ class Pawn(ChessFigure):
     def __init__(self, color, position):
         super().__init__(color, Title.pawn, position)
 
-    def move(self, leap=False):
+    def move(self, leap=False): # a leap is if the player decides to take two jumps
         if self.hasMoved and leap == True:
             self.position.y += 2
         else:
@@ -136,10 +136,10 @@ class Pawn(ChessFigure):
 
     def beat(self, victim: ChessFigure):
 
-        if victim.position.x == self.position.x + 1 and victim.position.y == self.position.y + 1:
+        if victim.position.x == self.position.x + 1 and victim.position.y == self.position.y + 1: #if the paw decides to beat the chessfigure to the northeast
             print(self.title.name, " has beat ", victim.title.name)
             self.position = victim.position
-        elif victim.position.x == self.position.x - 1 and victim.position.y == self.position.y + 1:
+        elif victim.position.x == self.position.x - 1 and victim.position.y == self.position.y + 1: #if the paw decides to beat the chessfigure to the northwest
             print(self.title.name, " has beat ", victim.title.name)
             self.position = victim.position
 
@@ -150,7 +150,7 @@ class Queen(ChessFigure):
 
     def move(self, direction: Direction, jumps: int, *args):
 
-        if direction.value == 1:
+        if direction.value == 1: #each value corresponds to the enum for directions
             self.position.y += jumps
         elif direction.value == 2:
             self.position.x += jumps
@@ -186,10 +186,10 @@ class King(ChessFigure):
 
         if rook.hasMoved == False and self.hasMoved == False:
             self.isCasstled = True
-            if direction == Direction.east:
+            if direction == Direction.east: #castling to the right side
                 rook.position.x -= 2
                 self.position.x += 2
-            elif direction == Direction.west:
+            elif direction == Direction.west: #castling to the left side
                 rook.position.x += 3
                 self.position.x -= 2
 
